@@ -22,6 +22,7 @@ export class UsersController {
 
   @Get()
   @ApiOperation({ summary: 'Return all registered users.' })
+  @ApiResponse({ status: 200, description: 'Returns array of users' })
   findAll() {
     return this.usersService.findAll();
   }
