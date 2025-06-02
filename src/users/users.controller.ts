@@ -1,35 +1,19 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { UserRole } from 'src/util/role.enum';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
 
 @ApiTags('users')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
-
-  @Post()
-  @ApiOperation({ summary: 'Create new user' })
-  @ApiResponse({
-    status: 201,
-    schema: {
-      example: {
-        message: 'User registered successfully',
-        user: {
-          id: 5,
-          fullName: 'Tresor Manzi',
-          email: 'manzitre@gmail.com',
-          roles: UserRole.ADMIN,
-        },
-      },
-    },
-  })
-  @ApiResponse({ status: 400, description: 'Bad request. Invalid inputs' })
-  @ApiResponse({ status: 500, description: 'Internal Server Error' })
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
-  }
 
   @Get()
   @ApiOperation({ summary: 'Return all registered users.' })

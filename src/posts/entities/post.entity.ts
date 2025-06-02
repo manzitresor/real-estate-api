@@ -32,9 +32,6 @@ export class Post {
   type: string;
 
   @Column()
-  images: string[];
-
-  @Column()
   address: string;
 
   @Column()

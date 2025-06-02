@@ -45,13 +45,6 @@ export class CreatePostDto {
   type: string;
 
   @ApiProperty({
-    example: ['image1.jpg', 'image2.jpg'],
-    required: true,
-  })
-  @IsString({ each: true })
-  images: string[];
-
-  @ApiProperty({
     example: '123 Main St, Springfield, USA',
     required: true,
   })
