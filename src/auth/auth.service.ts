@@ -33,13 +33,14 @@ export class AuthService {
         'Invalid credential. Email or Password does not exist',
       );
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...withNoPassword } = user;
     return withNoPassword;
   }
 
   async signin(userData: LoginDto) {
     const user = await this.validateUser(userData);
-    const payload = { email: user.email, user: user.id };
+    const payload = { id: user.id, email: user.email, name: user.name };
     return {
       user,
       access_token: this.jwtService.sign(payload),
